@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADUS | Premium Pet Care</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #F6BD60;
+            --cream: #F7EDE2;
+            --blush: #F5CAC3;
+            --sage: #84A59D;
+            --coral: #F28482;
+            --ink: #1B1B1E;
+            --glass: rgba(255, 255, 255, 0.25);
+            --glass-thick: rgba(255, 255, 255, 0.8);
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(-45deg, #F6BD60, #F7EDE2, #F5CAC3, #84A59D);
+            background-size: 400% 400%;
+            animation: gradientAnim 15s ease infinite;
+            color: var(--ink);
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientAnim {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        #walking-canvas { position: fixed; top: 0; left: 0; z-index: 0; pointer-events: none; }
+
+        /* --- MODERN NAVIGATION --- */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 25px 8%;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 2000; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        nav.scrolled {
+            padding: 15px 8%;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+        .logo { font-size: 1.8rem; font-weight: 900; letter-spacing: -2px; cursor: pointer; z-index: 2100; }
+        
+        .nav-links { display: flex; gap: 40px; align-items: center; }
+        .nav-links a { 
+            text-decoration: none; color: var(--ink); font-weight: 600; 
+            font-size: 0.9rem; transition: 0.3s; position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; width: 0; height: 2px; 
+            bottom: -5px; left: 0; background: var(--coral); transition: 0.3s;
+        }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* Mobile Toggle */
+        .menu-toggle { display: none; flex-direction: column; gap: 6px; cursor: pointer; z-index: 2100; }
+        .menu-toggle span { 
+            width: 28px; height: 3px; background: var(--ink); 
+            border-radius: 2px; transition: 0.3s; 
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 1; position: relative;
+        }
+        .hero-title {
+            display: flex; overflow: hidden;
+            font-size: clamp(5rem, 18vw, 12rem);
+            font-weight: 900; letter-spacing: -4px; line-height: 1;
+        }
+        .hero-title span {
+            display: inline-block;
+            transform: translateY(100%);
+            animation: revealUp 0.8s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+        }
+        @keyframes revealUp { to { transform: translateY(0); } }
+        .hero-title span:nth-child(1) { animation-delay: 0.1s; }
+        .hero-title span:nth-child(2) { animation-delay: 0.2s; }
+        .hero-title span:nth-child(3) { animation-delay: 0.3s; }
+        .hero-title span:nth-child(4) { animation-delay: 0.4s; }
+        .hero-title span:nth-child(5) { animation-delay: 0.5s; color: var(--coral); }
+
+        .hero p {
+            font-size: 1.1rem; opacity: 0;
+            animation: fadeIn 1s ease 1s forwards;
+            margin-top: 20px; font-weight: 500;
+        }
+        @keyframes fadeIn { to { opacity: 0.7; } }
+
+        /* --- PRODUCTS GRID --- */
+        .products-grid {
+            padding: 100px 8%; display: grid; z-index: 1; position: relative;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;
+        }
+        .product-card {
+            background: var(--glass); backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.3); padding: 20px; border-radius: 24px;
+            transition: 0.4s; cursor: pointer; opacity: 0; transform: translateY(30px);
+        }
+        .product-card.reveal { opacity: 1; transform: translateY(0); }
+        .product-card:hover { transform: translateY(-10px); background: rgba(255,255,255,0.4); }
+        .product-card img { width: 100%; border-radius: 18px; margin-bottom: 15px; }
+
+        /* --- MODERN CONTACT SECTION --- */
+        .contact-container {
+            padding: 120px 8%; position: relative; z-index: 1;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+            align-items: center;
+        }
+        .contact-text h2 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; line-height: 1.1; margin-bottom: 20px; }
+        .contact-text p { font-size: 1.1rem; line-height: 1.6; opacity: 0.8; margin-bottom: 30px; }
+        
+        .contact-form {
+            background: var(--glass); backdrop-filter: blur(25px);
+            padding: 50px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.4);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 18px; border-radius: 15px; border: 1px solid rgba(0,0,0,0.05);
+            background: rgba(255,255,255,0.5); font-family: inherit; font-size: 1rem;
+            transition: 0.3s;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none; background: #fff; border-color: var(--coral);
+        }
+        .send-btn {
+            width: 100%; padding: 18px; border-radius: 15px; border: none;
+            background: var(--ink); color: #fff; font-weight: 700; font-size: 1rem;
+            cursor: pointer; transition: 0.3s;
+        }
+        .send-btn:hover { background: var(--coral); transform: translateY(-3px); }
+
+        /* --- FOOTER SECTION --- */
+        .footer-cta {
+            background: var(--ink); color: #fff; padding: 80px 8% 40px;
+            text-align: center; border-radius: 60px 60px 0 0; position: relative; z-index: 1;
+        }
+        .footer-logo { font-size: 2.5rem; font-weight: 900; margin-bottom: 15px; }
+        .credits {
+            margin-top: 60px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem; opacity: 0.6; letter-spacing: 1px;
+        }
+        .heart { color: var(--coral); display: inline-block; animation: beat 1.5s infinite; }
+        @keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+
+        /* --- MODAL --- */
+        .modal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(10px); display: none; z-index: 3000;
+            justify-content: center; align-items: center;
+        }
+        .modal-content { background: white; padding: 40px; border-radius: 30px; max-width: 400px; text-align: center; }
+        .modal-btn { background: var(--ink); color: white; border: none; padding: 12px 30px; border-radius: 10px; margin-top: 20px; cursor: pointer; }
+
+        /* --- MOBILE MENU ANIMATION --- */
+        @media (max-width: 968px) {
+            .contact-container { grid-template-columns: 1fr; text-align: center; gap: 40px; }
+            .nav-links {
+                position: fixed; top: 0; right: -100%; height: 100vh; width: 70%;
+                background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+                flex-direction: column; justify-content: center; transition: 0.5s;
+                box-shadow: -10px 0 30px rgba(0,0,0,0.05);
+            }
+            .nav-links.active { right: 0; }
+            .menu-toggle { display: flex; }
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="walking-canvas"></canvas>
+
+<nav id="navbar">
+    <div class="logo">ADUS.</div>
+    <div class="menu-toggle" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+    </div>
+    <div class="nav-links" id="navLinks">
+        <a href="#" onclick="toggleMenu()">Home</a>
+        <a href="#products" onclick="toggleMenu()">Products</a>
+        <a href="#contact" onclick="toggleMenu()">Contact</a>
+        <a href="#" style="background:var(--ink); color:white; padding:12px 25px; border-radius:12px;">Get Started</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-title">
+        <span>A</span><span>D</span><span>U</span><span>S</span><span>.</span>
+    </div>
+    <p>Reimagining the bond between you and your pet.</p>
+</section>
+
+<section class="products-grid" id="products">
+    <div class="product-card" data-title="Leather Collar" data-desc="Hand-stitched full grain leather.">
+        <img src="https://images.unsplash.com/photo-1558788353-f76d92427f16?auto=format&fit=crop&q=80&w=400" alt="Collar">
+        <h3>The Sculptor</h3>
+    </div>
+    <div class="product-card" data-title="Nutri-Mix" data-desc="The ultimate dietary supplement.">
+        <img src="https://images.unsplash.com/photo-1601758123927-15fa7fd44138?auto=format&fit=crop&q=80&w=400" alt="Food">
+        <h3>Nutri-Mix</h3>
+    </div>
+    <div class="product-card" data-title="Zen Toy" data-desc="Anxiety reducing texture technology.">
+        <img src="https://images.unsplash.com/photo-1616401781221-0222d5e19541?auto=format&fit=crop&q=80&w=400" alt="Toy">
+        <h3>Zen Toy</h3>
+    </div>
+</section>
+
+<section class="contact-container" id="contact">
+    <div class="contact-text">
+        <h2>Get in touch with the pack.</h2>
+        <p>Whether you have a question about our curated collections or just want to share a photo of your furry friend, we're all ears.</p>
+        <div style="font-weight: 600; font-size: 0.9rem;">
+            <p style="margin-bottom: 10px;">📍 404 Pet Avenue, Silicon Valley</p>
+            <p>✉️ hello@adus.pet</p>
+        </div>
+    </div>
+    <div class="contact-form">
+        <div class="form-group">
+            <input type="text" placeholder="Your Name">
+        </div>
+        <div class="form-group">
+            <input type="email" placeholder="Email Address">
+        </div>
+        <div class="form-group">
+            <textarea rows="4" placeholder="How can we help?"></textarea>
+        </div>
+        <button class="send-btn">Send Message</button>
+    </div>
+</section>
+
+<footer class="footer-cta">
+    <div class="footer-content">
+        <div class="footer-logo">ADUS.</div>
+        <p>Subscribe to our newsletter for clinical pet care insights and exclusive product drops.</p>
+        <div class="credits">
+            designed and developed with <span class="heart">❤️</span> by Cousins and Co. Tech
+        </div>
+    </div>
+</footer>
+
+<div class="modal" id="modal">
+    <div class="modal-content">
+        <h3 id="modal-title"></h3>
+        <p id="modal-desc"></p>
+        <button class="modal-btn" onclick="closeModal()">Dismiss</button>
+    </div>
+</div>
+
+<script>
+    // --- NAV LOGIC ---
+    function toggleMenu() {
+        document.getElementById('navLinks').classList.toggle('active');
+    }
+
+    window.addEventListener('scroll', () => {
+        const nav = document.getElementById('navbar');
+        if (window.scrollY > 50) {
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
+    });
+
+    // --- PAW SCRIPT ---
+    const canvas=document.getElementById('walking-canvas');
+    const ctx=canvas.getContext('2d');
+    let w=canvas.width=window.innerWidth;
+    let h=canvas.height=window.innerHeight;
+    window.addEventListener('resize',()=>{w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight;});
+
+    let paws=[],posX=w/2,posY=h+80,phase=0,gaitIndex=0;
+    const CONFIG={pawColor:"27,27,30",baseSize:18,fadeSpeed:0.0015,stepInterval:450,stride:55,sway:12};
+    const gait=[{side:1,rear:true},{side:-1,rear:false},{side:-1,rear:true},{side:1,rear:false}];
+
+    function drawPaw(x,y,size,opacity,isFront){
+        ctx.save(); ctx.translate(x,y); ctx.globalAlpha=opacity; ctx.fillStyle=`rgb(${CONFIG.pawColor})`;
+        const s=isFront?size:size*0.85;
+        ctx.beginPath(); ctx.moveTo(0,s*0.2);
+        ctx.bezierCurveTo(-s*0.6,s*0.3,-s*0.4,s*0.8,0,s*0.7);
+        ctx.bezierCurveTo(s*0.4,s*0.8,s*0.6,s*0.3,0,s*0.2); ctx.fill();
+        [{x:-0.38,y:-0.28},{x:-0.18,y:-0.52},{x:0.18,y:-0.52},{x:0.38,y:-0.28}].forEach(t=>{
+            ctx.beginPath(); ctx.ellipse(t.x*s,t.y*s,s*0.22,s*0.28,0,0,Math.PI*2); ctx.fill();
+        });
+        ctx.restore();
+    }
+
+    function createStep(){
+        const step=gait[gaitIndex];
+        posY-=CONFIG.stride*0.4; posX+=Math.sin(phase)*2; phase+=0.2;
+        paws.push({x:posX+(step.side*35), y:posY+(step.rear?70:0), size:CONFIG.baseSize, opacity:0.1, isFront:!step.rear});
+        gaitIndex=(gaitIndex+1)%gait.length;
+        if(posY<-200){posY=h+100; posX=w*Math.random();}
+        setTimeout(createStep,CONFIG.stepInterval);
+    }
+
+    function render(){
+        ctx.clearRect(0,0,w,h);
+        for(let i=paws.length-1;i>=0;i--){
+            const p=paws[i]; drawPaw(p.x,p.y,p.size,p.opacity,p.isFront);
+            p.opacity-=CONFIG.fadeSpeed; if(p.opacity<=0)paws.splice(i,1);
+        }
+        requestAnimationFrame(render);
+    }
+    createStep(); render();
+
+    // --- SCROLL REVEAL ---
+    window.addEventListener('scroll', () => {
+        document.querySelectorAll('.product-card').forEach(p => {
+            if(p.getBoundingClientRect().top < window.innerHeight * 0.8) p.classList.add('reveal');
+        });
+    });
+
+    // --- MODAL ---
+    const modal = document.getElementById('modal');
+    document.querySelectorAll('.product-card').forEach(card => {
+        card.onclick = () => {
+            document.getElementById('modal-title').innerText = card.dataset.title;
+            document.getElementById('modal-desc').innerText = card.dataset.desc;
+            modal.style.display = 'flex';
+        }
+    });
+    function closeModal() { modal.style.display = 'none'; }
+</script>
+</body>
+</html>
