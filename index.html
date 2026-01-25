@@ -3,7 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ADUS | Premium Pet Care</title>
+    
+    <title>ADUS | Premium Pet Care & Luxury Wellness - Coming Soon</title>
+    <meta name="description" content="ADUS is reimagining premium pet care at aduspetcare.com. Join our waitlist for exclusive access to clinical pet wellness insights and luxury product drops.">
+    <link rel="canonical" href="https://aduspetcare.com/">
+
+    <meta property="og:title" content="ADUS | Premium Pet Care Reimagined">
+    <meta property="og:description" content="Elevating the bond between you and your pet. Sign up for early access at aduspetcare.com.">
+    <meta property="og:url" content="https://aduspetcare.com/">
+    <meta property="og:type" content="website">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "PetStore",
+      "name": "ADUS Premium Pet Care",
+      "url": "https://aduspetcare.com",
+      "description": "Premium pet care products and clinical wellness insights.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Silicon Valley",
+        "addressRegion": "CA",
+        "country": "USA"
+      }
+    }
+    </script>
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -18,7 +43,9 @@
         }
 
         * { margin:0; padding:0; box-sizing:border-box; }
-        html { scroll-behavior: smooth; }
+        
+        html, body { height: 100%; }
+
         body {
             font-family: 'Inter', sans-serif;
             background: linear-gradient(-45deg, #F6BD60, #F7EDE2, #F5CAC3, #84A59D);
@@ -26,6 +53,8 @@
             animation: gradientAnim 15s ease infinite;
             color: var(--ink);
             overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         @keyframes gradientAnim {
@@ -36,47 +65,27 @@
 
         #walking-canvas { position: fixed; top: 0; left: 0; z-index: 0; pointer-events: none; }
 
-        /* --- MODERN NAVIGATION --- */
-        nav {
+        header {
             position: fixed; top: 0; width: 100%; padding: 25px 8%;
-            display: flex; justify-content: space-between; align-items: center;
-            z-index: 2000; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 2000;
         }
-        nav.scrolled {
-            padding: 15px 8%;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-        }
-        .logo { font-size: 1.8rem; font-weight: 900; letter-spacing: -2px; cursor: pointer; z-index: 2100; }
-        
-        .nav-links { display: flex; gap: 40px; align-items: center; }
-        .nav-links a { 
-            text-decoration: none; color: var(--ink); font-weight: 600; 
-            font-size: 0.9rem; transition: 0.3s; position: relative;
-        }
-        .nav-links a::after {
-            content: ''; position: absolute; width: 0; height: 2px; 
-            bottom: -5px; left: 0; background: var(--coral); transition: 0.3s;
-        }
-        .nav-links a:hover::after { width: 100%; }
+        .logo { font-size: 1.8rem; font-weight: 900; letter-spacing: -2px; }
 
-        /* Mobile Toggle */
-        .menu-toggle { display: none; flex-direction: column; gap: 6px; cursor: pointer; z-index: 2100; }
-        .menu-toggle span { 
-            width: 28px; height: 3px; background: var(--ink); 
-            border-radius: 2px; transition: 0.3s; 
+        main {
+            flex: 1;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center; 
+            z-index: 1; position: relative;
+            text-align: center;
+            padding: 80px 20px;
         }
 
-        /* --- HERO SECTION --- */
-        .hero {
-            height: 100vh; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; z-index: 1; position: relative;
-        }
         .hero-title {
             display: flex; overflow: hidden;
             font-size: clamp(5rem, 18vw, 12rem);
             font-weight: 900; letter-spacing: -4px; line-height: 1;
+            margin-bottom: 10px;
         }
         .hero-title span {
             display: inline-block;
@@ -90,247 +99,221 @@
         .hero-title span:nth-child(4) { animation-delay: 0.4s; }
         .hero-title span:nth-child(5) { animation-delay: 0.5s; color: var(--coral); }
 
-        .hero p {
+        h1 {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-weight: 600;
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.8s forwards;
+        }
+
+        .hero-description {
             font-size: 1.1rem; opacity: 0;
             animation: fadeIn 1s ease 1s forwards;
-            margin-top: 20px; font-weight: 500;
+            margin-top: 15px; font-weight: 500;
+            max-width: 600px;
+            line-height: 1.6;
         }
-        @keyframes fadeIn { to { opacity: 0.7; } }
 
-        /* --- PRODUCTS GRID --- */
-        .products-grid {
-            padding: 100px 8%; display: grid; z-index: 1; position: relative;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;
+        /* --- COMING SOON FORM --- */
+        .coming-soon-form {
+            margin-top: 40px;
+            display: flex;
+            gap: 10px;
+            opacity: 0;
+            animation: fadeIn 1.2s ease 1.2s forwards;
+            width: 100%;
+            max-width: 480px;
         }
-        .product-card {
-            background: var(--glass); backdrop-filter: blur(15px);
-            border: 1px solid rgba(255,255,255,0.3); padding: 20px; border-radius: 24px;
-            transition: 0.4s; cursor: pointer; opacity: 0; transform: translateY(30px);
-        }
-        .product-card.reveal { opacity: 1; transform: translateY(0); }
-        .product-card:hover { transform: translateY(-10px); background: rgba(255,255,255,0.4); }
-        .product-card img { width: 100%; border-radius: 18px; margin-bottom: 15px; }
-
-        /* --- MODERN CONTACT SECTION --- */
-        .contact-container {
-            padding: 120px 8%; position: relative; z-index: 1;
-            display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
-            align-items: center;
-        }
-        .contact-text h2 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; line-height: 1.1; margin-bottom: 20px; }
-        .contact-text p { font-size: 1.1rem; line-height: 1.6; opacity: 0.8; margin-bottom: 30px; }
-        
-        .contact-form {
-            background: var(--glass); backdrop-filter: blur(25px);
-            padding: 50px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.4);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-        }
-        .form-group { margin-bottom: 20px; }
-        .form-group input, .form-group textarea {
-            width: 100%; padding: 18px; border-radius: 15px; border: 1px solid rgba(0,0,0,0.05);
-            background: rgba(255,255,255,0.5); font-family: inherit; font-size: 1rem;
+        .coming-soon-form input {
+            flex: 1;
+            padding: 18px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.4);
+            background: var(--glass-thick);
+            backdrop-filter: blur(10px);
+            font-family: inherit;
+            font-size: 1rem;
+            outline: none;
             transition: 0.3s;
         }
-        .form-group input:focus, .form-group textarea:focus {
-            outline: none; background: #fff; border-color: var(--coral);
-        }
-        .send-btn {
-            width: 100%; padding: 18px; border-radius: 15px; border: none;
-            background: var(--ink); color: #fff; font-weight: 700; font-size: 1rem;
-            cursor: pointer; transition: 0.3s;
-        }
-        .send-btn:hover { background: var(--coral); transform: translateY(-3px); }
+        .coming-soon-form input:focus { border-color: var(--coral); background: white; }
 
-        /* --- FOOTER SECTION --- */
-        .footer-cta {
-            background: var(--ink); color: #fff; padding: 80px 8% 40px;
+        .notify-btn {
+            padding: 0 30px;
+            border-radius: 15px;
+            border: none;
+            background: var(--ink);
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .notify-btn:hover { background: var(--coral); transform: translateY(-2px); }
+
+        @keyframes fadeIn { to { opacity: 0.9; } }
+
+        footer {
+            background: var(--ink); color: #fff; padding: 40px 8%;
             text-align: center; border-radius: 60px 60px 0 0; position: relative; z-index: 1;
         }
-        .footer-logo { font-size: 2.5rem; font-weight: 900; margin-bottom: 15px; }
+        .footer-logo { font-size: 1.5rem; font-weight: 900; margin-bottom: 10px; }
         .credits {
-            margin-top: 60px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.9rem; opacity: 0.6; letter-spacing: 1px;
+            margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.8rem; opacity: 0.6; letter-spacing: 1px;
         }
         .heart { color: var(--coral); display: inline-block; animation: beat 1.5s infinite; }
         @keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
 
-        /* --- MODAL --- */
-        .modal {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.4);
-            backdrop-filter: blur(10px); display: none; z-index: 3000;
-            justify-content: center; align-items: center;
-        }
-        .modal-content { background: white; padding: 40px; border-radius: 30px; max-width: 400px; text-align: center; }
-        .modal-btn { background: var(--ink); color: white; border: none; padding: 12px 30px; border-radius: 10px; margin-top: 20px; cursor: pointer; }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
 
-        /* --- MOBILE MENU ANIMATION --- */
-        @media (max-width: 968px) {
-            .contact-container { grid-template-columns: 1fr; text-align: center; gap: 40px; }
-            .nav-links {
-                position: fixed; top: 0; right: -100%; height: 100vh; width: 70%;
-                background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
-                flex-direction: column; justify-content: center; transition: 0.5s;
-                box-shadow: -10px 0 30px rgba(0,0,0,0.05);
-            }
-            .nav-links.active { right: 0; }
-            .menu-toggle { display: flex; }
+        @media (max-width: 600px) {
+            .coming-soon-form { flex-direction: column; }
+            .notify-btn { padding: 18px; }
+            .hero-title { font-size: 5rem; }
         }
     </style>
 </head>
 <body>
 
-<canvas id="walking-canvas"></canvas>
+<canvas id="walking-canvas" aria-hidden="true"></canvas>
 
-<nav id="navbar">
+<header>
     <div class="logo">ADUS.</div>
-    <div class="menu-toggle" onclick="toggleMenu()">
-        <span></span><span></span><span></span>
-    </div>
-    <div class="nav-links" id="navLinks">
-        <a href="#" onclick="toggleMenu()">Home</a>
-        <a href="#products" onclick="toggleMenu()">Products</a>
-        <a href="#contact" onclick="toggleMenu()">Contact</a>
-        <a href="#" style="background:var(--ink); color:white; padding:12px 25px; border-radius:12px;">Get Started</a>
-    </div>
-</nav>
+</header>
 
-<section class="hero">
-    <div class="hero-title">
+<main>
+    <div class="hero-title" aria-label="ADUS">
         <span>A</span><span>D</span><span>U</span><span>S</span><span>.</span>
     </div>
-    <p>Reimagining the bond between you and your pet.</p>
-</section>
+    <h1>Premium Pet Care is Coming Soon.</h1>
+    <p class="hero-description">
+        We are crafting a new standard for your companions at <strong>aduspetcare.com</strong>. 
+        Reimagining wellness, style, and the bond you share. Join our waitlist for the launch.
+    </p>
+    
 
-<section class="products-grid" id="products">
-    <div class="product-card" data-title="Leather Collar" data-desc="Hand-stitched full grain leather.">
-        <img src="https://images.unsplash.com/photo-1558788353-f76d92427f16?auto=format&fit=crop&q=80&w=400" alt="Collar">
-        <h3>The Sculptor</h3>
-    </div>
-    <div class="product-card" data-title="Nutri-Mix" data-desc="The ultimate dietary supplement.">
-        <img src="https://images.unsplash.com/photo-1601758123927-15fa7fd44138?auto=format&fit=crop&q=80&w=400" alt="Food">
-        <h3>Nutri-Mix</h3>
-    </div>
-    <div class="product-card" data-title="Zen Toy" data-desc="Anxiety reducing texture technology.">
-        <img src="https://images.unsplash.com/photo-1616401781221-0222d5e19541?auto=format&fit=crop&q=80&w=400" alt="Toy">
-        <h3>Zen Toy</h3>
-    </div>
-</section>
+</main>
 
-<section class="contact-container" id="contact">
-    <div class="contact-text">
-        <h2>Get in touch with the pack.</h2>
-        <p>Whether you have a question about our curated collections or just want to share a photo of your furry friend, we're all ears.</p>
-        <div style="font-weight: 600; font-size: 0.9rem;">
-            <p style="margin-bottom: 10px;">📍 404 Pet Avenue, Silicon Valley</p>
-            <p>✉️ hello@adus.pet</p>
-        </div>
-    </div>
-    <div class="contact-form">
-        <div class="form-group">
-            <input type="text" placeholder="Your Name">
-        </div>
-        <div class="form-group">
-            <input type="email" placeholder="Email Address">
-        </div>
-        <div class="form-group">
-            <textarea rows="4" placeholder="How can we help?"></textarea>
-        </div>
-        <button class="send-btn">Send Message</button>
-    </div>
-</section>
-
-<footer class="footer-cta">
+<footer>
     <div class="footer-content">
         <div class="footer-logo">ADUS.</div>
-        <p>Subscribe to our newsletter for clinical pet care insights and exclusive product drops.</p>
         <div class="credits">
-            designed and developed with <span class="heart">❤️</span> by Cousins and Co. Tech
+            © 2024 ADUS Pet Care. <br> Designed with <span class="heart">❤️</span> by Cousins and Co. Tech
         </div>
     </div>
 </footer>
 
-<div class="modal" id="modal">
-    <div class="modal-content">
-        <h3 id="modal-title"></h3>
-        <p id="modal-desc"></p>
-        <button class="modal-btn" onclick="closeModal()">Dismiss</button>
-    </div>
-</div>
-
 <script>
-    // --- NAV LOGIC ---
-    function toggleMenu() {
-        document.getElementById('navLinks').classList.toggle('active');
+    const canvas = document.getElementById('walking-canvas');
+const ctx = canvas.getContext('2d');
+let w = canvas.width = window.innerWidth;
+let h = canvas.height = window.innerHeight;
+
+window.addEventListener('resize', () => {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+});
+
+let paws = [], posX = w / 2, posY = h + 80, phase = 0, gaitIndex = 0;
+
+// CONFIG REFINEMENT
+const CONFIG = {
+    pawColor: "27,27,30",
+    baseSize: 18,
+    fadeSpeed: 0.0012, // Slower fade for a longer trail
+    stepInterval: 380, // Faster interval for a natural pace
+    stride: 75,        // Longer vertical distance
+    swayAmount: 15     // Lateral body shift
+};
+
+/** * GAIT SEQUENCE: 
+ * Natural 4-beat walk: Rear Left -> Front Left -> Rear Right -> Front Right
+ * side: -1 (Left), 1 (Right)
+ * offset: vertical adjustment to separate front and back paws
+ */
+const gait = [
+    { side: -1, isRear: true,  vOffset: 60 },  // Rear Left
+    { side: -1, isRear: false, vOffset: 0 },   // Front Left
+    { side: 1,  isRear: true,  vOffset: 60 },  // Rear Right
+    { side: 1,  isRear: false, vOffset: 0 }    // Front Right
+];
+
+function drawPaw(x, y, size, opacity, isFront) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.globalAlpha = opacity;
+    ctx.fillStyle = `rgb(${CONFIG.pawColor})`;
+    
+    // Front paws are slightly larger than rear paws
+    const s = isFront ? size : size * 0.85;
+    
+    // Main Pad (Metacarpal)
+    ctx.beginPath();
+    ctx.moveTo(0, s * 0.2);
+    ctx.bezierCurveTo(-s * 0.6, s * 0.3, -s * 0.4, s * 0.8, 0, s * 0.7);
+    ctx.bezierCurveTo(s * 0.4, s * 0.8, s * 0.6, s * 0.3, 0, s * 0.2);
+    ctx.fill();
+
+    // Digital Pads (Toes)
+    const toes = [
+        { x: -0.38, y: -0.28 }, { x: -0.18, y: -0.52 },
+        { x: 0.18, y: -0.52 },  { x: 0.38, y: -0.28 }
+    ];
+    toes.forEach(t => {
+        ctx.beginPath();
+        ctx.ellipse(t.x * s, t.y * s, s * 0.22, s * 0.28, 0, 0, Math.PI * 2);
+        ctx.fill();
+    });
+    ctx.restore();
+}
+
+function createStep() {
+    const step = gait[gaitIndex];
+    
+    // Every 2 steps (one side), we move the "body" forward
+    if (gaitIndex % 2 === 0) {
+        posY -= CONFIG.stride;
+        // Add a slight "sway" to the path
+        phase += 0.4;
+        posX += Math.sin(phase) * CONFIG.swayAmount;
     }
 
-    window.addEventListener('scroll', () => {
-        const nav = document.getElementById('navbar');
-        if (window.scrollY > 50) {
-            nav.classList.add('scrolled');
-        } else {
-            nav.classList.remove('scrolled');
-        }
+    const stepX = posX + (step.side * 30);
+    const stepY = posY + step.vOffset;
+
+    paws.push({
+        x: stepX,
+        y: stepY,
+        size: CONFIG.baseSize,
+        opacity: 0.15,
+        isFront: !step.isRear
     });
 
-    // --- PAW SCRIPT ---
-    const canvas=document.getElementById('walking-canvas');
-    const ctx=canvas.getContext('2d');
-    let w=canvas.width=window.innerWidth;
-    let h=canvas.height=window.innerHeight;
-    window.addEventListener('resize',()=>{w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight;});
+    gaitIndex = (gaitIndex + 1) % gait.length;
 
-    let paws=[],posX=w/2,posY=h+80,phase=0,gaitIndex=0;
-    const CONFIG={pawColor:"27,27,30",baseSize:18,fadeSpeed:0.0015,stepInterval:450,stride:55,sway:12};
-    const gait=[{side:1,rear:true},{side:-1,rear:false},{side:-1,rear:true},{side:1,rear:false}];
-
-    function drawPaw(x,y,size,opacity,isFront){
-        ctx.save(); ctx.translate(x,y); ctx.globalAlpha=opacity; ctx.fillStyle=`rgb(${CONFIG.pawColor})`;
-        const s=isFront?size:size*0.85;
-        ctx.beginPath(); ctx.moveTo(0,s*0.2);
-        ctx.bezierCurveTo(-s*0.6,s*0.3,-s*0.4,s*0.8,0,s*0.7);
-        ctx.bezierCurveTo(s*0.4,s*0.8,s*0.6,s*0.3,0,s*0.2); ctx.fill();
-        [{x:-0.38,y:-0.28},{x:-0.18,y:-0.52},{x:0.18,y:-0.52},{x:0.38,y:-0.28}].forEach(t=>{
-            ctx.beginPath(); ctx.ellipse(t.x*s,t.y*s,s*0.22,s*0.28,0,0,Math.PI*2); ctx.fill();
-        });
-        ctx.restore();
+    // Reset when off-screen
+    if (posY < -200) {
+        posY = h + 100;
+        posX = Math.random() * (w - 200) + 100;
     }
 
-    function createStep(){
-        const step=gait[gaitIndex];
-        posY-=CONFIG.stride*0.4; posX+=Math.sin(phase)*2; phase+=0.2;
-        paws.push({x:posX+(step.side*35), y:posY+(step.rear?70:0), size:CONFIG.baseSize, opacity:0.1, isFront:!step.rear});
-        gaitIndex=(gaitIndex+1)%gait.length;
-        if(posY<-200){posY=h+100; posX=w*Math.random();}
-        setTimeout(createStep,CONFIG.stepInterval);
+    setTimeout(createStep, CONFIG.stepInterval);
+}
+
+function render() {
+    ctx.clearRect(0, 0, w, h);
+    for (let i = paws.length - 1; i >= 0; i--) {
+        const p = paws[i];
+        drawPaw(p.x, p.y, p.size, p.opacity, p.isFront);
+        p.opacity -= CONFIG.fadeSpeed;
+        if (p.opacity <= 0) paws.splice(i, 1);
     }
+    requestAnimationFrame(render);
+}
 
-    function render(){
-        ctx.clearRect(0,0,w,h);
-        for(let i=paws.length-1;i>=0;i--){
-            const p=paws[i]; drawPaw(p.x,p.y,p.size,p.opacity,p.isFront);
-            p.opacity-=CONFIG.fadeSpeed; if(p.opacity<=0)paws.splice(i,1);
-        }
-        requestAnimationFrame(render);
-    }
-    createStep(); render();
-
-    // --- SCROLL REVEAL ---
-    window.addEventListener('scroll', () => {
-        document.querySelectorAll('.product-card').forEach(p => {
-            if(p.getBoundingClientRect().top < window.innerHeight * 0.8) p.classList.add('reveal');
-        });
-    });
-
-    // --- MODAL ---
-    const modal = document.getElementById('modal');
-    document.querySelectorAll('.product-card').forEach(card => {
-        card.onclick = () => {
-            document.getElementById('modal-title').innerText = card.dataset.title;
-            document.getElementById('modal-desc').innerText = card.dataset.desc;
-            modal.style.display = 'flex';
-        }
-    });
-    function closeModal() { modal.style.display = 'none'; }
+createStep();
+render();
 </script>
 </body>
 </html>
