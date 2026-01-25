@@ -165,6 +165,11 @@
         .heart { color: var(--coral); display: inline-block; animation: beat 1.5s infinite; }
         @keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
 
+        .designer {
+  color: white;      /* Makes the text white */
+  text-decoration: none; /* Optional: removes underline */
+}
+
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
 
         @media (max-width: 600px) {
@@ -199,8 +204,9 @@
     <div class="footer-content">
         <div class="footer-logo">ADUS.</div>
         <div class="credits">
-            © 2024 ADUS Pet Care. <br> Designed with <span class="heart">❤️</span> by <a href="https://cousinsandcotech.in" target="_blank" rel="noopener"> Cousins and Co. Tech</a>
-        </div>
+ © 2024 ADUS Pet Care. <br>
+    Designed with <span class="heart">❤️</span> by 
+    <a href="https://cousinsandcotech.in" target="_blank" rel="noopener" class="designer">Cousins and Co. Tech</a>        </div>
     </div>
 </footer>
 
@@ -317,5 +323,6 @@ render();
 </script>
 </body>
 </html>
+
 
 
